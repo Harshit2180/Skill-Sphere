@@ -6,6 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { DarkMode } from '@/DarkMode';
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from './ui/sheet';
 import { Separator } from '@radix-ui/react-dropdown-menu';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
 
@@ -35,8 +36,8 @@ const Navbar = () => {
                                     <DropdownMenuLabel>My Account</DropdownMenuLabel>
                                     <DropdownMenuSeparator />
                                     <DropdownMenuGroup>
-                                        <DropdownMenuItem>My Learning</DropdownMenuItem>
-                                        <DropdownMenuItem>Edit Profile</DropdownMenuItem>
+                                        <DropdownMenuItem><Link to="my-learning">My Learning</Link></DropdownMenuItem>
+                                        <DropdownMenuItem><Link to="profile"> Edit Profile</Link></DropdownMenuItem>
                                         <DropdownMenuItem>Logout</DropdownMenuItem>
                                     </DropdownMenuGroup>
                                     <DropdownMenuSeparator />

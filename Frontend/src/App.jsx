@@ -5,6 +5,9 @@ import HeroSection from './pages/student/HeroSection'
 import { createBrowserRouter } from 'react-router-dom'
 import { RouterProvider } from 'react-router'
 import MainLayout from './layout/MainLayout.jsx'
+import Courses from './pages/student/Courses'
+import MyLearning from './pages/student/MyLearning'
+import Profile from './pages/student/Profile'
 
 const appRouter = createBrowserRouter([
   {
@@ -15,14 +18,22 @@ const appRouter = createBrowserRouter([
         path: "/",
         element: (
           <>
-          <HeroSection/>
-          {/* course */}
+            <HeroSection />
+            <Courses />
           </>
         )
       },
       {
         path: "login",
-        element: <Login/>
+        element: <Login />
+      },
+      {
+        path: "my-learning",
+        element: <MyLearning />
+      },
+      {
+        path: "profile",
+        element: <Profile />
       }
     ]
   }
@@ -32,7 +43,7 @@ function App() {
 
   return (
     <main>
-     <RouterProvider router={appRouter}/>
+      <RouterProvider router={appRouter} />
     </main>
   )
 }
