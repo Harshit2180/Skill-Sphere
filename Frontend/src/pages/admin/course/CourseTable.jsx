@@ -56,7 +56,6 @@ const CourseTable = () => {
   const { data, isLoading } = useGetCreatorCourseQuery();
   const navigate = useNavigate();
 
-  console.log(data)
   if (isLoading) return <h1>Loading...</h1>
 
   return (

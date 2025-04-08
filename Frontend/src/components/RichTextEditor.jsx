@@ -28,7 +28,12 @@ const editorConfig = {
     nodes: [],
 };
 
-const RichTextEditor = () => {
+const RichTextEditor = ({ input, setInput }) => {
+
+    const handleChange = (content) => {
+        setInput({ ...input, description: content })
+    }
+
     return (
         <LexicalComposer initialConfig={editorConfig}>
             <div className="editor-container">
