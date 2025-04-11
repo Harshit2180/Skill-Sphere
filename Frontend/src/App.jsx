@@ -44,7 +44,7 @@ const appRouter = createBrowserRouter([
         element: <Profile />
       },
       {
-        path: "course-detail",
+        path: "course-detail/:courseId",
         element: <CourseDetail />
       },
 
