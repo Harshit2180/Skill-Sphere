@@ -29,7 +29,7 @@ const Navbar = () => {
     }, [isSuccess])
 
     return (
-        <div className='h-16 dark:bg-[#0A0A0A] bg-white border-b dark:border-b-gray-800 border-b-gray-200 fixed top-0 left-0 right-0 duration-300 z-10'>
+        <div className='h-16 dark:bg-[#020817] bg-white border-b dark:border-b-gray-800 border-b-gray-200 fixed top-0 left-0 right-0 duration-300 z-10'>
             {/* Desktop */}
             <div className='max-w-7xl mx-auto hidden md:flex justify-between items-center gap-10 h-full'>
                 <div className='flex items-center gap-2'>
@@ -56,10 +56,10 @@ const Navbar = () => {
                                         <DropdownMenuItem onClick={logoutHandler}>Logout</DropdownMenuItem>
                                     </DropdownMenuGroup>
                                     {
-                                        user.role === "instructor" && (
+                                        user?.role === "instructor" && (
                                             <>
                                                 <DropdownMenuSeparator />
-                                                <DropdownMenuItem>Dashboard</DropdownMenuItem>
+                                                <DropdownMenuItem><Link to="/admim/dashboard">Dashboard</Link></DropdownMenuItem>
                                             </>
                                         )
                                     }
@@ -77,7 +77,7 @@ const Navbar = () => {
             {/* Mobile devices */}
             <div className='flex md:hidden items-center justify-between px-4 h-full'>
                 <h1 className='font-extrabold text2xl'>Skill Sphere</h1>
-                <MobileNavbar />
+                <MobileNavbar user={user} />
             </div>
         </div>
     )
@@ -85,33 +85,33 @@ const Navbar = () => {
 
 export default Navbar
 
-const MobileNavbar = () => {
+const MobileNavbar = ({ user }) => {
 
-    const role = "instructor";
+    const navigate = useNavigate();
 
     return (
         <Sheet>
             <SheetTrigger asChild>
-                <Button size="icon" className='rounded-full bg-gray-200 hover:bg-gray-200' variant="outline">
+                <Button size="icon" className='rounded-full hover:bg-gray-200' variant="outline">
                     <Menu />
                 </Button>
             </SheetTrigger>
             <SheetContent className='flex flex-col'>
                 <SheetHeader className='flex flex-row items-center justify-between mt-2'>
-                    <SheetTitle>Skill Sphere</SheetTitle>
+                    <SheetTitle><Link to="/">Skill Sphere</Link></SheetTitle>
                     <DarkMode />
                 </SheetHeader>
                 <Separator className='mr-2' />
                 <nav className='flex flex-col space-y-4'>
-                    <span>My Learning</span>
-                    <span>Edit Profile</span>
-                    <span>Logout</span>
+                    <Link to="/my-learning">My Learning</Link>
+                    <Link to="/profile">Edit Profile</Link>
+                    <Link>Logout</Link>
                 </nav>
                 {
-                    role === "instructor" && (
+                    user?.role === "instructor" && (
                         <SheetFooter>
                             <SheetClose asChild>
-                                <Button type="submit">Dashboard</Button>
+                                <Button type="submit" onClick={() => navigate("/admin/dashboard")}>Dashboard</Button>
                             </SheetClose>
                         </SheetFooter>
                     )
