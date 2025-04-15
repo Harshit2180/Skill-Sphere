@@ -1,6 +1,6 @@
 import Stripe from "stripe";
 import { Course } from "../models/course.model.js";
-import { CoursePurchase } from "../models/coursePurchase.model.js";
+import { CoursePurchase } from "../models/purchaseCourse.model.js";
 import { Lecture } from "../models/lecture.model.js"
 import { User } from "../models/user.model.js"
 
@@ -156,6 +156,8 @@ export const getCouruseDetailWithPurchaseStatus = async (req, res) => {
             })
         }
 
+        const purchased = await CoursePurchase.findOne({ userId, courseId })
+
         return res.status(200).json({
             course,
             purchased: !!purchased
@@ -169,6 +171,8 @@ export const getCouruseDetailWithPurchaseStatus = async (req, res) => {
 export const getAllPurchasedCourse = async (_, res) => {
     try {
         const purchasedCourse = await CoursePurchase.find({ status: "completed" }).populate("courseId");
+        console.log("Purchased Course:", purchasedCourse);
+
         if (!purchasedCourse) {
             return res.status(404).json({
                 purchasedCourse: []

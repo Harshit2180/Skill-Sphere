@@ -36,8 +36,8 @@ const AddCourse = () => {
     return (
         <div className='flex-1 mx-10'>
             <div className='mb-4'>
-                <h1 className='font-bold text-xl'>Let's add course, add some basic details for your new course</h1>
-                <p className='text-sm'>Lorem ipsum dolor sit amet consectetur adipisicing.</p>
+                <h1 className='font-bold text-xl'>Create Your New Course</h1>
+                <p className='text-sm'>Provide essential information to set up your course and begin the process.</p>
             </div>
             <div className='space-y-4'>
                 <div>

@@ -95,7 +95,7 @@ const LectureTab = () => {
             <CardHeader className="flex justify-between">
                 <div>
                     <CardTitle>Edit Lecture</CardTitle>
-                    <CardDescription>Make changes and click save when you're done</CardDescription>
+                    <CardDescription>Make your changes and click "Update Lecture" when you're finished.</CardDescription>
                 </div>
                 <div className='flex items-center gap-2'>
                     <Button disabled={removeLoading} variant="destructive" onClick={removeLectureHandler} >

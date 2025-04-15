@@ -26,7 +26,7 @@ const CourseTab = () => {
     const courseId = params.courseId;
     const { data: courseByIdData, isLoading: courseByIdLoading, refetch } = useGetCourseByIdQuery(courseId);
 
-    const [publishCourse, {}] = usePublishCourseMutation();
+    const [publishCourse, { }] = usePublishCourseMutation();
 
     useEffect(() => {
         if (courseByIdData?.course) {
@@ -115,9 +115,9 @@ const CourseTab = () => {
         <Card>
             <CardHeader className='flex flex-row justify-between'>
                 <div>
-                    <CardTitle>Basic Course Information</CardTitle>
+                    <CardTitle>Manage Your Course Details</CardTitle>
                     <CardDescription>
-                        Make changes to your courses here. Click save when you're done.
+                        Quickly update your course information and save your changes when you're done.
                     </CardDescription>
                 </div>
                 <div className='space-x-2'>

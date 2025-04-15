@@ -3,11 +3,16 @@ import mongoose from "mongoose";
 const coursePurchaseSchema = new mongoose.Schema({
     courseId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        ref: 'Course',
         required: true
     },
     amount: {
         type: Number,
+        required: true
+    },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
         required: true
     },
     status: {
@@ -19,6 +24,6 @@ const coursePurchaseSchema = new mongoose.Schema({
         type: String,
         required: true
     }
-}, {timestamps: true})
+}, { timestamps: true })
 
 export const CoursePurchase = mongoose.model('CoursePurchase', coursePurchaseSchema)

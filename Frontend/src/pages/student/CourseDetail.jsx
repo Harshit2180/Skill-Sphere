@@ -31,7 +31,7 @@ const CourseDetail = () => {
             <div className='bg-[#2D2F31] text-white'>
                 <div className='max-w-7xl mx-auto py-8 px-4 md:px-8 flex flex-col gap-2'>
                     <h1 className='font-bold text-2xl md:text-3xl'>{course?.courseTitle}</h1>
-                    <p className='text-base md:text-lg'>Subtitle</p>
+                    <p className='text-base md:text-lg'>{course?.subTitle}</p>
                     <p>Created By{" "}<span className='text-[#C0C4FC] underline italic'>{course?.creator.name}</span></p>
                     <div className='flex items-center text-sm gap-2'>
                         <BadgeInfo size={16} />
@@ -47,7 +47,7 @@ const CourseDetail = () => {
                     <Card>
                         <CardHeader>
                             <CardTitle>Course Content</CardTitle>
-                            <CardDescription>10 Lectures</CardDescription>
+                            <CardDescription>{course?.lectures.length} Lectures</CardDescription>
                         </CardHeader>
                         <CardContent className='space-y-3'>
                             {
@@ -71,9 +71,9 @@ const CourseDetail = () => {
                             <div className='w-full aspect-video mb-4'>
                                 <ReactPlayer width={"100%"} height="100%" url={course.lectures[0].videoUrl} controls={true} />
                             </div>
-                            <h1>Lecture Title</h1>
+                            <h1>{course?.lectures[0]?.lectureTitle}</h1>
                             <Separator className='my-2' />
-                            <h1 className='text-lg md:text-xl font-semibold'>Cours Price</h1>
+                            <h1 className='text-lg md:text-xl font-semibold'>Course Price: ₹{course?.coursePrice}</h1>
                         </CardContent>
                         <CardFooter className='flex justify-center p-4'>
                             {
