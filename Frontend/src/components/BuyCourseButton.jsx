@@ -38,7 +38,6 @@ const BuyCourseButton = ({ courseId }) => {
           </>
         ) : "Purchase course"
       }
-      Purchase Course
     </Button>
   )
 }

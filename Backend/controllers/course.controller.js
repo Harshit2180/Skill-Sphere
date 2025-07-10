@@ -42,6 +42,7 @@ export const searchCourse = async (req, res) => {
                 { category: { $regex: query, $options: "i" } }
             ]
         }
+        
 
         if (categories.length > 0) {
             searchCriteria.category = { $in: categories }
@@ -52,7 +53,7 @@ export const searchCourse = async (req, res) => {
             sortOptions.coursePrice = 1;
         }
         else if (sortByPrice === "high") {
-            sortOptions = -1
+            sortOptions.coursePrice = -1
         }
 
         let courses = await Course.find(searchCriteria).populate({ path: "creator", select: "name photoUrl" }).sort(sortOptions)
@@ -174,6 +175,49 @@ export const getCourseById = async (req, res) => {
         })
     }
 }
+
+export const removeCourse = async (req, res) => {
+    try {
+        const { courseId } = req.params;
+
+        const course = await Course.findById(courseId).populate("lectures");
+        if (!course) {
+            return res.status(404).json({
+                message: "Course not found"
+            });
+        }
+
+        // Delete thumbnail from Cloudinary
+        if (course.courseThumbnail) {
+            const publicId = course.courseThumbnail.split("/").pop().split(".")[0];
+            await deleteMediaFromCloudinary(publicId);
+        }
+
+        // Delete all lectures and their videos
+        for (const lectureId of course.lectures) {
+            const lecture = await Lecture.findById(lectureId);
+
+            if (lecture?.publicId) {
+                await deleteVideoFromCloudinary(lecture.publicId);
+            }
+
+            await Lecture.findByIdAndDelete(lectureId);
+        }
+
+        // Delete the course
+        await course.deleteOne();
+
+        return res.status(200).json({
+            message: "Course removed successfully"
+        });
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            message: "Failed to remove course"
+        });
+    }
+};
 
 export const createLecture = async (req, res) => {
     try {

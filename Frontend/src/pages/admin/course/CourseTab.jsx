@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { useEditCourseMutation, useGetCourseByIdQuery, usePublishCourseMutation } from '@/features/api/courseApi';
+import { useEditCourseMutation, useGetCourseByIdQuery, usePublishCourseMutation, useRemoveCourseMutation } from '@/features/api/courseApi';
 import { Loader2 } from 'lucide-react';
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
@@ -48,6 +48,7 @@ const CourseTab = () => {
     const navigate = useNavigate();
 
     const [editCourse, { data, isLoading, isSuccess, error }] = useEditCourseMutation();
+    const [removeCourse, { isLoading: isRemoving }] = useRemoveCourseMutation();
 
     const changeEventHandler = (e) => {
         const { name, value } = e.target;
@@ -99,6 +100,16 @@ const CourseTab = () => {
         }
     }
 
+    const removeCourseHandler = async () => {
+        try {
+            const res = await removeCourse(courseId).unwrap();
+            toast.success(res.message || "Course removed successfully");
+            navigate("/admin/course");
+        } catch (err) {
+            toast.error(err.data?.message || "Failed to remove course");
+        }
+    };
+
     useEffect(() => {
         if (isSuccess) {
             toast.success(data.message || "Course updated")
@@ -124,7 +135,16 @@ const CourseTab = () => {
                     <Button disabled={courseByIdData?.course.lectures.length === 0} variant='outline' onClick={() => publishStatusHandler(courseByIdData?.course.isPublished ? "false" : "true")}>
                         {courseByIdData?.course.isPublished ? "Unpublish" : "Publish"}
                     </Button>
-                    <Button>Remove Course</Button>
+                    <Button onClick={removeCourseHandler} disabled={isRemoving}>
+                        {
+                            isRemoving ? (
+                                <>
+                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                    Removing...
+                                </>
+                            ) : "Remove Course"
+                        }
+                    </Button>
                 </div>
             </CardHeader>
             <CardContent>
