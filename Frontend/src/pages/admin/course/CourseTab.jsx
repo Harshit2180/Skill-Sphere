@@ -40,7 +40,12 @@ const CourseTab = () => {
                 coursePrice: course.coursePrice,
                 courseThumbnail: ""
             })
+
+
+            setPreviewThumbnail(course.courseThumbnail);
+
         }
+
     }, [courseByIdData])
 
     const [previewThumbnail, setPreviewThumbnail] = useState("");
@@ -81,7 +86,9 @@ const CourseTab = () => {
         formData.append("category", input.category)
         formData.append("courseLevel", input.courseLevel)
         formData.append("coursePrice", input.coursePrice)
-        formData.append("courseThumbnail", input.courseThumbnail)
+        if (input.courseThumbnail) {
+            formData.append("courseThumbnail", input.courseThumbnail);
+        }
 
         await editCourse({ formData, courseId })
     }
@@ -164,7 +171,7 @@ const CourseTab = () => {
                     <div className='flex items-center gap-5'>
                         <div>
                             <Label>Category</Label>
-                            <Select onValueChange={selectCategory}>
+                            <Select value={input.category} onValueChange={selectCategory}>
                                 <SelectTrigger className="w-[180px]">
                                     <SelectValue placeholder="Select a category" />
                                 </SelectTrigger>
@@ -187,7 +194,7 @@ const CourseTab = () => {
                         </div>
                         <div>
                             <Label>Course Level</Label>
-                            <Select onValueChange={selectCourseLevel}>
+                            <Select value={input.courseLevel} onValueChange={selectCourseLevel}>
                                 <SelectTrigger className="w-[180px]">
                                     <SelectValue placeholder="Select the course level" />
                                 </SelectTrigger>
