@@ -1,5 +1,5 @@
 import { Menu, School } from 'lucide-react'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button } from './ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from './ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
@@ -15,6 +15,7 @@ const Navbar = () => {
 
     const { user } = useSelector(store => store.auth)
     const [logoutUser, { data, isSuccess }] = useLogoutUserMutation();
+    const [dropdownOpen, setDropdownOpen] = useState(false);
     const navigate = useNavigate();
 
     const logoutHandler = async () => {
@@ -40,7 +41,7 @@ const Navbar = () => {
                 <div className='flex items-center gap-8'>
                     {
                         user ? (
-                            <DropdownMenu>
+                            <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
                                 <DropdownMenuTrigger asChild>
                                     <Avatar>
                                         <AvatarImage src={user?.photoUrl || "https://github.com/shadcn.png"} alt="@shadcn" />
@@ -51,15 +52,15 @@ const Navbar = () => {
                                     <DropdownMenuLabel>My Account</DropdownMenuLabel>
                                     <DropdownMenuSeparator />
                                     <DropdownMenuGroup>
-                                        <DropdownMenuItem><Link to="my-learning">My Learning</Link></DropdownMenuItem>
-                                        <DropdownMenuItem><Link to="profile"> Edit Profile</Link></DropdownMenuItem>
+                                        <DropdownMenuItem asChild onSelect={() => setDropdownOpen(false)}><Link to="my-learning">My Learning</Link></DropdownMenuItem>
+                                        <DropdownMenuItem asChild onSelect={() => setDropdownOpen(false)}><Link to="profile"> Edit Profile</Link></DropdownMenuItem>
                                         <DropdownMenuItem onClick={logoutHandler}>Logout</DropdownMenuItem>
                                     </DropdownMenuGroup>
                                     {
                                         user?.role === "instructor" && (
                                             <>
                                                 <DropdownMenuSeparator />
-                                                <DropdownMenuItem><Link to="/admin/dashboard">Dashboard</Link></DropdownMenuItem>
+                                                <DropdownMenuItem asChild onSelect={() => setDropdownOpen(false)}><Link to="/admin/dashboard">Dashboard</Link></DropdownMenuItem>
                                             </>
                                         )
                                     }
