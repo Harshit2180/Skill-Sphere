@@ -5,8 +5,8 @@ import { deleteMediaFromCloudinary, uploadMedia } from "../utils/cloudinary.js";
 
 export const register = async (req, res) => {
     try {
-        const { name, email, password } = req.body;
-        if (!name || !email || !password) {
+        const { name, email, password, role } = req.body;
+        if (!name || !email || !password || !role) {
             return res.status(400).json({
                 success: true,
                 message: "All fields are required"
@@ -26,7 +26,8 @@ export const register = async (req, res) => {
         await User.create({
             name,
             email,
-            password: hashedPassword
+            password: hashedPassword,
+            role: role.toLowerCase()
         })
 
         return res.status(201).json({
@@ -147,7 +148,7 @@ export const updateProfile = async (req, res) => {
         const photoUrl = cloudResponse.secure_url;
 
         const updatedData = { name, photoUrl }
-        const updatedUser = await User.findByIdAndUpdate(userId, updatedData, {new: true}).select("-password");
+        const updatedUser = await User.findByIdAndUpdate(userId, updatedData, { new: true }).select("-password");
 
         return res.status(200).json({
             success: true,

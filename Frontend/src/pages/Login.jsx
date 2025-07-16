@@ -8,9 +8,10 @@ import { useLoginUserMutation, useRegisterUserMutation } from '@/features/api/au
 import { Loader2 } from 'lucide-react'
 import { toast } from 'sonner'
 import { useNavigate } from 'react-router-dom'
+import { RadioGroup } from '@radix-ui/react-dropdown-menu'
 
 const Login = () => {
-  const [signupInput, setSignupInput] = useState({ name: "", email: "", password: "" })
+  const [signupInput, setSignupInput] = useState({ name: "", email: "", password: "", role: "" })
   const [loginInput, setLoginInput] = useState({ email: "", password: "" })
 
   const [registerUser, { data: registerData, error: registerError, isLoading: registerIsLoading, isSuccess: registerIsSuccess }] = useRegisterUserMutation()
@@ -81,6 +82,18 @@ const Login = () => {
                 <div className="space-y-1">
                   <Label htmlFor="username">Password</Label>
                   <Input type="password" name="password" onChange={(e) => changeInputHandler(e, "signup")} placeholder="Password" required="true" />
+                </div>
+                <div className='flex items-center justify-between'>
+                  <RadioGroup className='flex items-center gap-4 my-1'>
+                    <div className="flex items-center space-x-2">
+                      <Input type="radio" name="role" value="student" checked={signupInput.role === "student"} onChange={(e) => changeInputHandler(e, "signup")} className='cursor-pointer' />
+                      <Label htmlFor="r1">Student</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Input type="radio" name="role" value="instructor" checked={signupInput.role === "instructor"}  onChange={(e) => changeInputHandler(e, "signup")} className='cursor-pointer' />
+                      <Label htmlFor="r2">Instructor</Label>
+                    </div>
+                  </RadioGroup>
                 </div>
               </CardContent>
               <CardFooter>
